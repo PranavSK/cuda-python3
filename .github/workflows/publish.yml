@@ -1,0 +1,18 @@
+name: publish
+on: [push]
+jobs:
+    publish-docker-image:
+      runs-on: ubuntu-latest
+      steps:
+          - uses: actions/checkout@v2
+          - name: Login to GitHub Container Registry
+            uses: docker/login-action@v2
+            with:
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+          - name: Build the Docker image
+            run: |
+                docker build . --tag ghcr.io/pranavsk/cuda-python3:latest
+                #  docker run ghcr.io/pranavsk/cuda-python3:latest
+                docker push ghcr.io/pranavsk/cuda-python3:latest
