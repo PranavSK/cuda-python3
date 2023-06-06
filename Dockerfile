@@ -19,6 +19,10 @@ RUN apt-get install -y python3-dev python3-pip python3-wheel python3-setuptools
 RUN python3 -m pip install --upgrade pip
 COPY requirements.txt /tmp/
 RUN python3 -m pip install -r /tmp/requirements.txt && rm /tmp/requirements.txt
+# install quarto
+RUN wget https://quarto.org/download/latest/quarto-linux-amd64.deb
+RUN dpkg -i quarto-linux-amd64.deb
+RUN rm quarto-linux-amd64.deb
 # clean up
 RUN pip3 cache purge
 RUN apt-get autoremove -y && apt-get clean
